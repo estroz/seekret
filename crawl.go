@@ -108,10 +108,10 @@ func CrawlOrg(ctx context.Context, client *github.Client, orgName string) (srs [
 				// prefixes.
 				ignoreList := strings.Split(string(ignoreData), "\n")
 				for _, f := range ignoreList {
-                    // Ignore newlines and comments, which start with '#'
-                    if f != "" && f[0] != '#' {
-                        filesToIgnore[f] = struct{}{}
-                    }
+					// Ignore newlines and comments, which start with '#'
+					if f != "" && f[0] != '#' {
+						filesToIgnore[f] = struct{}{}
+					}
 				}
 			}
 		}
@@ -126,12 +126,12 @@ func CrawlOrg(ctx context.Context, client *github.Client, orgName string) (srs [
 				return nil
 			}
 
-            // Trim tmp directory and repo name from path.
-            relPath, err := filepath.Rel(repoDir, path)
-            if err != nil {
-                logrus.Warnf("WalkFunc: found sensitive file '%s', rel path error: ", err)
-                return nil
-            }
+			// Trim tmp directory and repo name from path.
+			relPath, err := filepath.Rel(repoDir, path)
+			if err != nil {
+				logrus.Warnf("WalkFunc: found sensitive file '%s', rel path error: ", err)
+				return nil
+			}
 			if _, ok := filesToIgnore[relPath]; ok {
 				return nil
 			}
